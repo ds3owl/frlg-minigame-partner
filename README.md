@@ -21,7 +21,7 @@ I took PokeLDN, removed all of its trading, gift and editing features, kept only
 - A Windows PC
 - An ESP32 board (classic ESP32, e.g. ESP32-DevKitC) and a USB cable
 - A Switch key file (`prod.keys`). It isn't included in the program.
-- An official copy of FireRed or LeafGreen for Switch
+- Pokémon FireRed or LeafGreen for Nintendo Switch
 
 ## How to use
 
