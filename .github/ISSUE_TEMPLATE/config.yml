@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Frequently asked questions
+    url: https://github.com/ds3owl/frlg-minigame-partner#faq
+    about: Quick answers — the Trainer Card star, playing solo, save editing.
+  - name: Questions and ideas (Discussions)
+    url: https://github.com/ds3owl/frlg-minigame-partner/discussions
+    about: Ask anything or share your records.
+  - name: Email
+    url: mailto:imchangwoo@outlook.com
+    about: No GitHub account? Write to imchangwoo@outlook.com.

@@ -1,0 +1,50 @@
+name: Report a bug
+description: Something doesn't work the way it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time! Plain words are fine — you don't need to be technical.
+        Never paste your prod.keys or anything from it.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: "I joined Ash's group, but the game never started."
+    validations:
+      required: true
+  - type: dropdown
+    id: game
+    attributes:
+      label: Which minigame?
+      options:
+        - Pokémon Jump
+        - Dodrio Berry Picking
+        - Preparing the board
+        - Something else
+  - type: input
+    id: version
+    attributes:
+      label: Program version
+      description: Shown at the bottom of the program window (for example "v1.0.0").
+      placeholder: "v1.0.0"
+  - type: input
+    id: setup
+    attributes:
+      label: Game and console
+      description: FireRed or LeafGreen, and Switch or Switch 2.
+      placeholder: "LeafGreen on Switch 2"
+  - type: input
+    id: board
+    attributes:
+      label: ESP32 board
+      placeholder: "ESP32-DevKitC V4"
+  - type: textarea
+    id: log
+    attributes:
+      label: Log (optional)
+      description: |
+        Click **Open logs** in the program and attach the newest `.log` file (and the `.jsonl` file of the same run if asked).
+      render: text
