@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ds3owl.github.io/frlg-minigame-partner/sitemap.xml

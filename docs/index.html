@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRLG Minigame Partner — Pokémon Jump &amp; Dodrio Berry Picking solo on Switch</title>
+<meta name="description" content="Get the minigame star on your Trainer Card in Pokémon FireRed and LeafGreen on Nintendo Switch, even on your own. A Windows PC and an ESP32 board fill the other player slots in Pokémon Jump and Dodrio Berry Picking.">
+<meta name="keywords" content="Pokémon Jump, Dodrio Berry Picking, Trainer Card star, FireRed, LeafGreen, Nintendo Switch, solo, ESP32, PokeLDN">
+<link rel="canonical" href="https://ds3owl.github.io/frlg-minigame-partner/">
+<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#07070b" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FRLG Minigame Partner">
+<meta property="og:description" content="Get the minigame star on your Trainer Card in Pokémon FireRed and LeafGreen on Nintendo Switch, even on your own. A Windows PC and an ESP32 board fill the other player slots in Pokémon Jump and Dodrio Berry Picking.">
+<meta property="og:image" content="https://ds3owl.github.io/frlg-minigame-partner/media/og.png">
+<meta property="og:url" content="https://ds3owl.github.io/frlg-minigame-partner/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ds3owl.github.io/frlg-minigame-partner/media/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "FRLG Minigame Partner",
+  "operatingSystem": "Windows",
+  "applicationCategory": "GameApplication",
+  "description": "Get the minigame star on your Trainer Card in Pokémon FireRed and LeafGreen on Nintendo Switch, even on your own. A Windows PC and an ESP32 board fill the other player slots in Pokémon Jump and Dodrio Berry Picking.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+  "downloadUrl": "https://github.com/ds3owl/frlg-minigame-partner/releases/latest",
+  "codeRepository": "https://github.com/ds3owl/frlg-minigame-partner",
+  "image": "https://ds3owl.github.io/frlg-minigame-partner/media/og.png",
+  "url": "https://ds3owl.github.io/frlg-minigame-partner/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I get the minigame star on my Trainer Card?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set both records: at least 200 jumps in a row in Pokémon Jump and at least 200 berries in one game of Dodrio Berry Picking. Together, these records earn one Trainer Card star."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I play Pokémon Jump or Dodrio Berry Picking solo on Switch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You need one Switch, one Windows PC and a USB-connected ESP32 board. The PC fills the other player slots as Ash. You still play your own Pokémon."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it edit my save?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Your save is never edited; the game itself saves your records."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root { --bg:#fbfbfd; --ink:#1d1d1f; --muted:#6e6e73; --card:#ffffff; --line:#e5e5ea; --accent:#0a66d6; --warn:#c77700; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#07070b; --ink:#f5f5f7; --muted:#a1a1aa; --card:#121219; --line:#26262f; --accent:#6aa8ff; --warn:#f0a541; } }
+* { box-sizing:border-box; }
+html, body { margin:0; background:var(--bg); color:var(--ink); }
+body { font-family:"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.55; }
+a { color:var(--accent); text-decoration:none; }
+.wrap { max-width:1080px; margin:0 auto; padding:0 16px; }
+header { text-align:center; padding:72px 0 28px; }
+h1 { font-size:clamp(40px,7vw,76px); line-height:1.02; margin:0; letter-spacing:-.02em; }
+.lede { font-size:clamp(19px,2.6vw,25px); color:var(--muted); margin:18px auto 0; max-width:760px; }
+.cta { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:30px 0 8px; }
+.btn { display:inline-block; padding:13px 26px; border-radius:999px; font-weight:600; font-size:17px; }
+.btn.primary { background:var(--ink); color:var(--bg); }
+.btn.ghost { border:1px solid var(--line); color:var(--ink); }
+.small { color:var(--muted); font-size:14px; }
+.shot { margin:40px auto 0; max-width:440px; border-radius:18px; overflow:hidden; border:1px solid var(--line); background:#fff; box-shadow:0 20px 50px rgba(0,0,0,.08); }
+.shot img { display:block; width:100%; height:auto; }
+.need { margin:56px auto 0; max-width:760px; background:var(--card); border:1px solid var(--line); border-left:4px solid var(--warn); border-radius:14px; padding:18px 22px; }
+.need h2 { font-size:19px; margin:0 0 8px; }
+.need ul { margin:0; padding-left:20px; }
+.need li { margin:4px 0; }
+section h2.big { font-size:clamp(30px,4.6vw,44px); text-align:center; margin:84px 0 8px; letter-spacing:-.01em; }
+section p.sub { text-align:center; color:var(--muted); margin:0 auto 30px; max-width:640px; font-size:18px; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px 26px; }
+.card h3 { font-size:24px; margin:0 0 4px; letter-spacing:-.01em; }
+.card .meta { color:var(--muted); font-size:15px; margin:0 0 12px; }
+.card ul { margin:0; padding-left:20px; color:var(--muted); }
+.card li { margin:5px 0; }
+.steps { max-width:760px; margin:0 auto; counter-reset:s; list-style:none; padding:0; }
+.steps li { position:relative; padding:0 0 22px 52px; color:var(--muted); font-size:17px; }
+.steps li::before { counter-increment:s; content:counter(s); position:absolute; left:0; top:-2px; width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--ink); font-weight:600; display:flex; align-items:center; justify-content:center; font-size:15px; }
+.steps b { color:var(--ink); }
+.faq { max-width:760px; margin:0 auto; }
+.faq h3 { font-size:18px; margin:26px 0 4px; }
+.faq p { margin:0; color:var(--muted); }
+code { font-size:15px; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:1px 5px; color:var(--ink); }
+footer { text-align:center; color:var(--muted); font-size:13px; padding:80px 0 40px; }
+@media (max-width:720px) { .grid { grid-template-columns:1fr; } header { padding-top:48px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>FRLG Minigame Partner</h1>
+    <p class="lede">Get the minigame star on your Trainer Card in Pokémon FireRed and LeafGreen on Nintendo Switch, even on your own.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/ds3owl/frlg-minigame-partner/releases/latest">Download for Windows</a>
+      <a class="btn ghost" href="https://github.com/ds3owl/frlg-minigame-partner">View on GitHub</a>
+    </div>
+    <div class="small">Free and open source (AGPL-3.0). No save editing: you play your own Pokémon.</div>
+    <div class="shot"><img src="media/app.png" alt="The FRLG Minigame Partner window: choose a minigame, plug in the board, choose prod.keys, click Start" width="521" height="730"></div>
+  </header>
+
+  <div class="need">
+    <h2>What you need</h2>
+    <ul>
+      <li>A Windows PC</li>
+      <li>A classic ESP32 board (e.g. ESP32-DevKitC) and a USB cable</li>
+      <li>Your Switch's key file (<code>prod.keys</code>). It isn't included.</li>
+      <li>An official copy of FireRed or LeafGreen for Switch</li>
+    </ul>
+  </div>
+
+  <section>
+    <h2 class="big">One star, two records</h2>
+    <p class="sub">The star needs at least 200 jumps in a row in Pokémon Jump and at least 200 berries in one game of Dodrio Berry Picking. Both are local wireless multiplayer minigames. Here the PC fills the other player slots.</p>
+    <div class="grid">
+      <div class="card"><h3>Pokémon Jump</h3><p class="meta">2 players · you lead, the PC joins</p>
+        <ul><li>Become the leader on your Switch; the PC joins as Ash.</li><li>It didn't miss up to 9999 jumps in testing, and up to 205 on real hardware.</li></ul></div>
+      <div class="card"><h3>Dodrio Berry Picking</h3><p class="meta">3 players · the PC leads, you join</p>
+        <ul><li>The PC opens a group; join it from your Switch.</li><li>It never takes a berry you can pick.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="big">How it works</h2>
+    <p class="sub">Two Island → Joyful Game Corner.</p>
+    <ol class="steps">
+      <li><b>Download and run</b> <code>FRLG-Minigame-Partner.exe</code>. If "Windows protected your PC" appears, click More info → Run anyway.</li>
+      <li><b>Plug in the board</b> and click Prepare board once. It writes the radio firmware.</li>
+      <li><b>Choose your prod.keys</b>. The program checks it before every run.</li>
+      <li><b>Click Start</b>, then on your Switch become the leader (Pokémon Jump) or join Ash's group (Dodrio Berry Picking).</li>
+    </ol>
+  </section>
+
+  <section class="faq">
+    <h2 class="big">FAQ</h2>
+    <h3>How do I get the minigame star on my Trainer Card?</h3>
+    <p>Set both records: at least 200 jumps in a row in Pokémon Jump and at least 200 berries in one game of Dodrio Berry Picking. Together, these records earn one Trainer Card star.</p>
+    <h3>Can I play Pokémon Jump or Dodrio Berry Picking solo on Switch?</h3>
+    <p>Yes. You need one Switch, one Windows PC and a USB-connected ESP32 board. The PC fills the other player slots as Ash. You still play your own Pokémon.</p>
+    <h3>Does it edit my save?</h3>
+    <p>No. Your save is never edited; the game itself saves your records.</p>
+  </section>
+
+  <footer>
+    <a href="https://github.com/ds3owl/frlg-minigame-partner">GitHub</a> · AGPL-3.0 · Built on <a href="https://github.com/Decryptu/pokeldn">PokeLDN</a><br>
+    Unofficial fan project, not affiliated with Nintendo or The Pokémon Company. Pokémon and Nintendo Switch are trademarks of their owners.
+  </footer>
+</div>
+</body>
+</html>
