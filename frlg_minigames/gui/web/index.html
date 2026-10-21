@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRLG Minigame Partner</title>
+<style>
+@font-face{font-family:Pretendard;font-weight:400;src:url(fonts/Pretendard-Regular.woff2) format("woff2")}
+@font-face{font-family:Pretendard;font-weight:500;src:url(fonts/Pretendard-Medium.woff2) format("woff2")}
+@font-face{font-family:Pretendard;font-weight:600;src:url(fonts/Pretendard-SemiBold.woff2) format("woff2")}
+:root{--bg:#fbfbfd;--card:#fff;--ink:#1d1d1f;--sub:#6e6e73;--line:#e5e5ea;--accent:#0a66d6;--error:#d70015}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,"Segoe UI",sans-serif;
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;user-select:none}
+main{padding:20px 20px 76px;max-width:620px;margin:0 auto}
+h1{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:0}
+.lead{color:var(--sub);margin:2px 0 14px}
+.seg{display:flex;gap:6px;margin-bottom:12px}
+.seg button{flex:1;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);
+  color:var(--ink);font:inherit;font-weight:500;cursor:pointer}
+.seg button small{display:block;color:var(--sub);font-weight:400;font-size:12px}
+.seg button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.seg button.on small{color:#c7c7cc}
+.seg button:disabled{cursor:default}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:6px 18px}
+ol{list-style:none;margin:0;padding:0}
+li{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+li:first-child{border-top:none}
+.n{flex:none;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);color:var(--sub);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
+li.now .n{background:var(--accent);border-color:var(--accent);color:#fff}
+li.done .n{background:var(--ink);border-color:var(--ink);color:#fff}
+.body{flex:1;min-width:0}
+.t{font-weight:500}
+.head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+li:not(.now):not(.done) .t{color:var(--sub)}
+.d{color:var(--sub);font-size:13px;margin-top:2px}
+.row{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+select{font:inherit;padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);
+  color:var(--ink);min-width:0;flex:1;max-width:260px}
+.file{flex:1;min-width:0;color:var(--sub);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{font:inherit;font-weight:500;padding:7px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.btn.sec{background:var(--card);border:1px solid var(--line);color:var(--ink)}
+.btn.pri{background:var(--ink);border:1px solid var(--ink);color:#fff;padding:8px 28px}
+.btn:disabled{opacity:.4;cursor:default}
+.tip{margin-top:6px;font-size:12.5px;color:var(--sub)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line)}
+.status{max-width:620px;margin:0 auto;padding:10px 20px;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.status .left{min-width:0}
+#status{font-weight:500}
+#status.error{color:var(--error)}
+#count{font-size:13px;color:var(--sub);white-space:nowrap}
+#count b{color:var(--ink);font-size:18px;font-weight:600;letter-spacing:-.02em}
+footer{display:flex;gap:10px;color:var(--sub);font-size:12px;margin-top:2px}
+footer a{color:var(--sub);cursor:pointer;text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+  <h1>FRLG Minigame Partner</h1>
+  <p class="lead">Play Pokémon Jump and Dodrio Berry Picking on your own.</p>
+
+  <div class="seg">
+    <button id="g-jump" onclick="setGame('jump')">Pokémon Jump<small>2 players · you lead</small></button>
+    <button id="g-berry" onclick="setGame('berry')">Dodrio Berry Picking<small>3 players · the PC leads</small></button>
+  </div>
+
+  <div class="card">
+    <ol>
+      <li id="s1"><div class="n">1</div><div class="body">
+        <div class="t">Plug the ESP32 board into this PC</div>
+        <div class="row">
+          <select id="port" onchange="api().set_port(this.value).then(render)"></select>
+          <button class="btn sec" id="refresh" onclick="api().refresh_ports().then(render)">Refresh</button>
+        </div>
+        <div class="d" id="noport" hidden>No board found. If it's plugged in, install the CP210x driver from Windows Update.</div>
+      </div></li>
+      <li id="s2"><div class="n">2</div><div class="body">
+        <div class="head"><div class="t">Prepare the board</div>
+          <button class="btn sec" id="prepare" onclick="api().prepare_board().then(render)">Prepare board</button></div>
+        <div class="d">First time only. It writes the radio firmware to the board.</div>
+      </div></li>
+      <li id="s3"><div class="n">3</div><div class="body">
+        <div class="head"><div class="t">Choose your prod.keys file</div>
+          <button class="btn sec" id="browse" onclick="api().choose_keys().then(render)">Browse…</button></div>
+        <div class="d file" id="keys">Not chosen</div>
+      </div></li>
+      <li id="s4"><div class="n">4</div><div class="body">
+        <div class="head"><div class="t">Click Start</div>
+          <button class="btn pri" id="start" onclick="toggle()">Start</button></div>
+      </div></li>
+      <li id="s5"><div class="n">5</div><div class="body">
+        <div class="t" id="t5"></div>
+        <div class="d" id="d5"></div>
+        <div class="tip" id="tip5"></div>
+      </div></li>
+      <li id="s6"><div class="n">6</div><div class="body">
+        <div class="t" id="t6"></div>
+        <div class="d" id="d6"></div>
+      </div></li>
+    </ol>
+  </div>
+
+</main>
+<div class="bar"><div class="status">
+  <div class="left"><div id="status">Ready.</div>
+    <footer><a onclick="api().open_logs()">Open logs</a><span id="ver"></span></footer></div>
+  <div id="count" hidden>In a row <b id="streak">0</b></div>
+</div></div>
+<script>
+const TEXT = {
+  jump: {
+    t5: "On your Switch, become the leader",
+    d5: "Two Island → Joyful Game Corner → Pokémon Jump attendant → pick a Pokémon → BECOME LEADER.",
+    tip5: "Tip: fast jumpers are easier when the vine speeds up: Charmander, Caterpie, Metapod, Weedle, Kakuna, Rattata, Raticate, Paras, Krabby.",
+    t6: name => `When ${name} joins, start the game`,
+    d6: "Then just play your own Pokémon. The PC jumps on its own.",
+  },
+  berry: {
+    t5: name => `On your Switch, join ${name}'s group`,
+    d5: name => `Two Island → Joyful Game Corner → Dodrio Berry Picking attendant → pick your Dodrio → JOIN GROUP → choose ${name}.`,
+    tip5: "",
+    t6: () => "Play",
+    d6: "Pick the berries in your own columns. The PC picks only the ones you can't reach.",
+  },
+};
+let S = null;
+const api = () => window.pywebview.api;
+const val = (v, s) => typeof v === "function" ? v(s.pc_name) : v;
+
+function setGame(g){ api().set_game(g).then(render); }
+function toggle(){ (S && S.busy === "run" ? api().stop() : api().start()).then(render); }
+
+function render(s){
+  S = s;
+  const T = TEXT[s.game], running = s.busy === "run", busy = !!s.busy;
+  document.getElementById("g-jump").classList.toggle("on", s.game === "jump");
+  document.getElementById("g-berry").classList.toggle("on", s.game === "berry");
+  for (const id of ["g-jump","g-berry","port","refresh","prepare","browse"]) document.getElementById(id).disabled = busy;
+
+  const sel = document.getElementById("port");
+  const opts = s.ports.map(p => `<option value="${p.device}"${p.device === s.port ? " selected" : ""}>${p.label}</option>`).join("");
+  if (sel.dataset.opts !== opts) { sel.innerHTML = opts || "<option value=''>No board</option>"; sel.dataset.opts = opts; }
+  document.getElementById("noport").hidden = s.ports.length > 0;
+  document.getElementById("prepare").disabled = busy || !s.port;
+  document.getElementById("keys").textContent = s.keys ? s.keys.split(/[\\/]/).pop() : "Not chosen";
+  const start = document.getElementById("start");
+  start.textContent = running ? "Stop" : "Start";
+  start.disabled = s.busy === "flash";
+
+  document.getElementById("t5").textContent = val(T.t5, s);
+  document.getElementById("d5").textContent = val(T.d5, s);
+  document.getElementById("tip5").textContent = T.tip5;
+  document.getElementById("tip5").hidden = !T.tip5;
+  document.getElementById("t6").textContent = val(T.t6, s);
+  document.getElementById("d6").textContent = val(T.d6, s);
+
+  const done = [s.ports.length > 0 && !!s.port, s.prepared, s.keys_ok, running, running && s.joined, running && s.playing];
+  let now = -1;
+  if (!running) now = done.slice(0, 3).findIndex(d => !d);
+  if (!running && now === -1) now = 3;
+  if (running) now = !s.joined ? 4 : 5;
+  if (s.busy === "flash") now = 1;
+  done.forEach((d, i) => {
+    const li = document.getElementById("s" + (i + 1));
+    li.classList.toggle("now", i === now);
+    li.classList.toggle("done", d && i !== now);
+    li.querySelector(".n").textContent = d && i !== now ? "✓" : String(i + 1);
+  });
+
+  const st = document.getElementById("status");
+  st.textContent = s.error || s.status || "Ready.";
+  st.classList.toggle("error", !!s.error);
+  const count = document.getElementById("count");
+  count.hidden = !(running && s.game === "jump" && s.playing);
+  document.getElementById("streak").textContent = s.streak;
+  document.getElementById("ver").textContent = "v" + s.version;
+}
+
+window.addEventListener("pywebviewready", () => {
+  api().state().then(render);
+  setInterval(() => api().state().then(render), 400);
+});
+</script>
+</body>
+</html>

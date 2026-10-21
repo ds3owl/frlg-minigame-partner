@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+build/
+dist/
+build_log.txt
+*.log
+*.jsonl
+runs/
+tests/rig/console/.build/
+.pytest_cache/
+prod.keys
