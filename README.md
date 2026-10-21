@@ -49,4 +49,6 @@ Yes. You need one Switch, one Windows PC and a USB-connected ESP32 board. The PC
 
 AGPL-3.0. The communication part is adapted from [PokeLDN](https://github.com/Decryptu/pokeldn) (AGPL-3.0), and the ESP32 firmware is PokeLDN's, unmodified.
 
+This is a non-commercial fan project. I don't sell it, and I won't accept donations or any money for it.
+
 Unofficial fan project, not affiliated with Nintendo or The Pokémon Company. Pokémon and Nintendo Switch are trademarks of their owners; under section 7(e) of the AGPL, no right to use them is granted.
